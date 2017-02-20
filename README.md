@@ -309,9 +309,38 @@ hello
 - Check libvirt version, (if ubuntu)
 
 ## Let's start with bootkube
+From CoreOS
 >Bootkube is a helper tool for launching self-hosted Kubernetes clusters.
 >When launched, bootkube will act as a temporary Kubernetes control-plane (api-server, scheduler, controller-manager), which operates long enough to bootstrap a replacement self-hosted control-plane.
 
 >Additionally, bootkube can be used to generate all of the necessary assets for use in bootstrapping a new cluster. These assets can then be modified to support any additional configuration options.
 
+Install bootkube v0.3.7
+```
+wget https://github.com/kubernetes-incubator/bootkube/releases/download/v0.3.7/bootkube.tar.gz
+tar xzf bootkube.tar.gz
+./bin/linux/bootkube version
+Version: v0.3.7
+```
+Use the bootkube tool to render Kubernetes manifests and credentials into an --asset-dir. Later, bootkube will schedule these manifests during bootstrapping and the credentials will be used to access your cluster.
+```
+./bin/linux/bootkube render --asset-dir=assets --api-servers=https://node1.example.com:443 --api-server-alt-names=DNS=node1.example.com
+```
 
+We're ready to use bootkube to create a temporary control plane and bootstrap a self-hosted Kubernetes cluster.
+
+
+Secure copy the kubeconfig to /etc/kubernetes/kubeconfig on every node which will path activate the kubelet.service.
+```
+for node in 'node1' 'node2' 'node3'; do
+    scp assets/auth/kubeconfig core@$node.example.com:/home/core/kubeconfig
+    ssh core@$node.example.com 'sudo mv kubeconfig /etc/kubernetes/kubeconfig'
+done
+```
+If you wonder why scp, please refer to this issue [#234](https://github.com/coreos/matchbox/issues/234)
+
+Secure copy the bootkube generated assets to any controller and start bootkube
+```
+scp -r assets core@node1.example.com:/home/core
+ssh core@node1.example.com 'sudo mv assets /opt/bootkube/assets && sudo systemctl start bootkube'
+```
