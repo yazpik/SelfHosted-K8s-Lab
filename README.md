@@ -139,6 +139,15 @@ rkt run --net=metal0:IP=172.18.0.2 --mount volume=data,target=/var/lib/matchbox 
 rkt run coreos.com/dnsmasq:v0.3.0 --net=metal0:IP=172.18.0.3 --mount volume=config,target=/etc/dnsmasq.conf --volume config,kind=host,source=$PWD/contrib/dnsmasq/metal0.conf
 ```
 
+Verify RKT containers are working
+```
+sudo rkt list
+UUID            APP             IMAGE NAME                      STATE   CREATED         STARTED         NETWORKS
+3b700943        matchbox        quay.io/coreos/matchbox:latest  running 6 seconds ago   6 seconds ago   metal0:ip4=172.18.0.2, default-restricted:ip4=172.17.0.2
+fdfa3e2f        dnsmasq         coreos.com/dnsmasq:v0.3.0       running 6 seconds ago   5 seconds ago   metal0:ip4=172.18.0.3, default-restricted:ip4=172.17.0.3
+```
+
+
 #### Bootkube example with Docker
 ```
 dnf install docker
@@ -271,15 +280,24 @@ And will proceed with the installation of CoreOS
 After 5 minutes or so Installation should be ready and nodes can be acsesible.
 ```
 virsh list
+Id    Name                           State
+----------------------------------------------------
+ 1     node1                          running
+ 2     node2                          running
+ 3     node3                          running
 ```
-If the SSH key was installed, you should be able to login in the servers with ssh-key
+If the SSH key was installed, you should be able to login in the servers with ssh-key, or use virsh console, profile was configured with autologin
 ```
 ssh core@node1
 ```
 Check if etcd was deployed and is healthy
-
 ```
 etcdctl cluster-status
+
+etcdctl set /message hello
+etcdctl get /message
+hello
+
 ```
 
 
