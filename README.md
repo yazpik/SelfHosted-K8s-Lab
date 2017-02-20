@@ -397,7 +397,7 @@ kube-system   pod-checkpointer-node1.example.com         1/1       Running   0  
 
 If you are experience errors on this process I'd recommend to follow some troubleshooting steps, that were recommended to me on this issue [#437](https://github.com/coreos/matchbox/issues/437)
 
-Also if you are experiencing a different issue you can always create an issue on the project, CoreOS engineers are pretty responsive and helpful.
+Also if you are experiencing a different issue you can always file one on the project, CoreOS engineers are pretty responsive and helpful.
 
 
 Next part I'll go over to the actual cluster and update the kubernetes version, and make api-server HA.
