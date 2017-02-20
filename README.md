@@ -43,10 +43,7 @@ sudo dnf install virt-install virt-manager git gpg rkt
 # Debian/Ubuntu
 sudo apt-get install virt-manager virtinst libvirt-bin qemu-kvm systemd-container git gpg
 # Install rkt 1.24.0 on Ubuntu 14.04
-gpg --recv-key 18AD5014C99EF7E3BA5F6CE950BDD3E0FC8A365E
 wget https://github.com/coreos/rkt/releases/download/v1.24.0/rkt_1.24.0-1_amd64.deb
-wget https://github.com/coreos/rkt/releases/download/v1.24.0/rkt_1.24.0-1_amd64.deb.asc
-gpg --verify rkt_1.24.0-1_amd64.deb.asc
 sudo dpkg -i rkt_1.24.0-1_amd64.deb 
 ```
 From here basically I'm using [official docs](https://github.com/coreos/matchbox) with some changes
