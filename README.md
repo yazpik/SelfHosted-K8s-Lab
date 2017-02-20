@@ -309,7 +309,7 @@ hello
 - Check libvirt version, (if ubuntu)
 
 ## Let's start with bootkube
-From CoreOS
+Bootkube definition by CoreOS
 >Bootkube is a helper tool for launching self-hosted Kubernetes clusters.
 >When launched, bootkube will act as a temporary Kubernetes control-plane (api-server, scheduler, controller-manager), which operates long enough to bootstrap a replacement self-hosted control-plane.
 
