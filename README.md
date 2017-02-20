@@ -214,7 +214,7 @@ Create 3 virtual instances, according what you configured on libvirt script
 ./scripts/libvirt create-docker
 ```
 
-#### This is only needed for in case you are using Ubuntu 14.04 and libvirt 1.2
+#### This is only needed in case you are using Ubuntu 14.04 and libvirt 1.2
 Look the static ignition manifest, it is configured by default to use "sda", but libvirt 1.2 will create the disks as "vda"
 
 **examples/ignition/bootkube-controller.yaml**
