@@ -2,7 +2,7 @@
 
 ![escher-lego](http://www.andrewlipson.com/escher/relativity-1600.jpg = 600x600)
 
-<img src="http://www.andrewlipson.com/escher/relativity-1600.jpg" width="600" height="600">
+<img src="http://www.andrewlipson.com/escher/relativity-1600.jpg" width="450" height="450">
 
 From [Wikipedia](https://en.wikipedia.org/wiki/History_of_compiler_construction)
 > "Self-hosting is the use of a computer program as part of the toolchain or operating system that produces new versions of that same program—for example, a compiler that can compile its own source code."
