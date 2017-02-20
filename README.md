@@ -308,6 +308,8 @@ hello
 - Matchbox console if servers are not booting correctly, did you modify names, macs ?
 - Check libvirt version, (if ubuntu)
 
-
+## Let's start with bootkube
+>Bootkube is a helper tool for launching self-hosted Kubernetes clusters.
+When launched, bootkube will act as a temporary Kubernetes control-plane (api-server, scheduler, controller-manager), which operates long enough to bootstrap a replacement self-hosted control-plane.
 
 
