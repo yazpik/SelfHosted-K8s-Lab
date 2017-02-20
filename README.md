@@ -363,7 +363,27 @@ curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s htt
 
 ```
 Feb 19 18:11:29 node1.example.com bootkube-start[1710]: [  309.970792] bootkube[5]:         Pod Status: kube-controller-manager        Running
-Feb 19 18:11:29 node1.example.com bootkube-start[1710]: [  309.971031] bootkube[5]: All self-hosted control plane components successfully started
+
+bootkube[5]: All self-hosted control plane components successfully started
 ```
 
+Use kubectl using the config rendered by bootkube e.g
+```
+~/matchbox# ./kubectl --kubeconfig=assets/auth/kubeconfig get pods --all-namespaces
+NAMESPACE     NAME                                       READY     STATUS    RESTARTS   AGE
+kube-system   checkpoint-installer-bwtg9                 1/1       Running   0          6m
+kube-system   kube-apiserver-1bdw0                       1/1       Running   2          6m
+kube-system   kube-controller-manager-3654003418-g85ld   1/1       Running   0          6m
+kube-system   kube-controller-manager-3654003418-wqv9h   1/1       Running   0          6m
+kube-system   kube-dns-4101612645-0mhtm                  4/4       Running   0          6m
+kube-system   kube-flannel-6sp77                         2/2       Running   1          6m
+kube-system   kube-flannel-8kjnk                         2/2       Running   1          6m
+kube-system   kube-flannel-wvm41                         2/2       Running   1          6m
+kube-system   kube-proxy-dxl0v                           1/1       Running   0          6m
+kube-system   kube-proxy-k0p1c                           1/1       Running   0          6m
+kube-system   kube-proxy-pqbdk                           1/1       Running   0          6m
+kube-system   kube-scheduler-850181384-ns8pp             1/1       Running   0          6m
+kube-system   kube-scheduler-850181384-zqm78             1/1       Running   0          6m
+kube-system   pod-checkpointer-node1.example.com         1/1       Running   0          5m
+```
 
