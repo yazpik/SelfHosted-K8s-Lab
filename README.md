@@ -286,7 +286,7 @@ Id    Name                           State
  2     node2                          running
  3     node3                          running
 ```
-If the SSH key was installed, you should be able to login in the servers with ssh-key, or use virsh console, profile was configured with autologin
+If the SSH key was configured as I described earlier, you should be able to login in the servers with ssh-key, or just use virsh console, profile was configured with autologin
 ```
 ssh core@node1
 ```
