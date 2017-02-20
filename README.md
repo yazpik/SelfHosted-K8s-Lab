@@ -299,13 +299,13 @@ cluster is healthy
 etcdctl set /message hello
 etcdctl get /message
 hello
-
 ```
 
 ### A bit of troubleshooting at this point.
 - Make sure matchbox and dnsmasq containers are running
-- Make sure firewalld and selinux is disabled, and metal0 was allowed (if Fedora)
-- Check journactl logs, matchbox console if servers are not booting
+- Make sure firewalld is allowing metal0 and selinux is permissive (if Fedora)
+- Check journactl logs
+- Matchbox console if servers are not booting correctly, did you modify names, macs ?
 - Check libvirt version, (if ubuntu)
 
 
