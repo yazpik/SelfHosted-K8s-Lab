@@ -362,7 +362,7 @@ curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s htt
 ```
 
 ```
-Feb 19 18:11:29 node1.example.com bootkube-start[1710]: [  309.970792] bootkube[5]:         Pod Status: kube-controller-manager        Running
+Feb 19 18:11:29 node1.example.com bootkube-start[1710]:bootkube[5]:Pod Status: kube-controller-manager Running
 
 bootkube[5]: All self-hosted control plane components successfully started
 ```
