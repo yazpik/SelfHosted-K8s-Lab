@@ -177,6 +177,7 @@ As I mentioned, just testing this environment on one baremetal host, so I'm goin
 acting one as a controller and two more as workers.
 
 https://github.com/coreos/matchbox/blob/master/scripts/libvirt#L44-L46
+
 This one works for Fedora25 with (libvirt 2.2)
 ```bash
 COMMON_VIRT_OPTS="--memory=1024 --vcpus=1 --pxe --disk pool=default,size=6 --os-type=linux --os-variant=generic --noautoconsole --events on_poweroff=preserve"
@@ -190,9 +191,11 @@ COMMON_VIRT_OPTS="--ram=1024 --vcpus=1 --pxe --disk pool=default,size=6,format=q
 You can change those params according your needs, *{matchbox_path}/scripts/libvirt*
 
 #### SSH-Keys
-Before to create the virtual instances, make sure your pub ssh key is in place, do the same for the rest of the nodes.
+Before to create the virtual instances, make sure your pub ssh key is in place
 *matchbox/examples/groups/bootkube*
 https://github.com/coreos/matchbox/blob/master/examples/groups/bootkube/node1.json#L15
+
+Do the same for the rest of the nodes.
 
 Create 3 virtual instances, according what you configured on libvirt script
 ### RKT
