@@ -393,7 +393,7 @@ kube-system   kube-scheduler-850181384-ns8pp             1/1       Running   0  
 kube-system   kube-scheduler-850181384-zqm78             1/1       Running   0          6m
 kube-system   pod-checkpointer-node1.example.com         1/1       Running   0          5m
 ```
-** *And this is Self-Hosted Kubernetes Cluster up and running :D* **
+**And this is Self-Hosted Kubernetes Cluster up and running :D**
 
 If you are experience errors on this process I'd recommend to follow some troubleshooting steps, that were recommended to me on this issue [#437](https://github.com/coreos/matchbox/issues/437)
 
