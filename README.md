@@ -192,7 +192,7 @@ You can change those params according your needs, *{matchbox_path}/scripts/libvi
 
 #### SSH-Keys
 Before to create the virtual instances, make sure your pub ssh key is in place
-*matchbox/examples/groups/bootkube*
+*matchbox/examples/groups/bootkube/node{1..3}.json*
 https://github.com/coreos/matchbox/blob/master/examples/groups/bootkube/node1.json#L15
 
 Do the same for the rest of the nodes.
@@ -267,6 +267,20 @@ At that time matchbox will catch the mac addr configured on [common.sh](https://
 And will proceed with the installation of CoreOS
 
 <img center src="https://cloud.githubusercontent.com/assets/7389339/23140825/5d8a6a04-f779-11e6-974e-b9c628d3876c.jpg">
+
+After 5 minutes or so Installation should be ready and nodes can be acsesible.
+```
+virsh list
+```
+If the SSH key was installed, you should be able to login in the servers with ssh-key
+```
+ssh core@node1
+```
+Check if etcd was deployed and is healthy
+
+```
+etcdctl cluster-status
+```
 
 
 
