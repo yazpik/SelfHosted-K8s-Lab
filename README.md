@@ -190,8 +190,14 @@ COMMON_VIRT_OPTS="--ram=1024 --vcpus=1 --pxe --disk pool=default,size=6,format=q
 You can change those params according your needs, *{matchbox_path}/scripts/libvirt*
 
 Create 3 virtual instances, according what you configured on libvirt script
+### RKT
 ```
 sudo ./scripts/libvirt create
+```
+
+### Docker way
+```
+sudo ./scripts/libvirt create-docker
 ```
 
 #### This is only needed for in case you are using Ubuntu 14.04 and libvirt 1.2
@@ -242,4 +248,12 @@ storage:
 Do the same for 
 - examples/ignition/bootkube-worker.yaml
 - examples/profiles/bootkube-worker.json
+
+
+
+After libvirt create was launched  You can connect to the serial console of any node. If you provisioned nodes with an SSH key, you can SSH after bring-up.
+
+sudo virsh console node1
+
+
 
