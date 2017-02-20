@@ -292,7 +292,9 @@ ssh core@node1
 ```
 Check if etcd was deployed and is healthy
 ```
-etcdctl cluster-status
+$ etcdctl cluster-health
+member 7e40ec9559c0d4da is healthy: got healthy result from http://node1.example.com:2379
+cluster is healthy
 
 etcdctl set /message hello
 etcdctl get /message
