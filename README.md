@@ -369,6 +369,13 @@ bootkube[5]: All self-hosted control plane components successfully started
 
 Use kubectl using the config rendered by bootkube e.g
 ```
+~/matchbox# ./kubectl --kubeconfig=assets/auth/kubeconfig get nodes
+NAME                STATUS    AGE
+node1.example.com   Ready     1m
+node2.example.com   Ready     1m
+node3.example.com   Ready     1m
+
+
 ~/matchbox# ./kubectl --kubeconfig=assets/auth/kubeconfig get pods --all-namespaces
 NAMESPACE     NAME                                       READY     STATUS    RESTARTS   AGE
 kube-system   checkpoint-installer-bwtg9                 1/1       Running   0          6m
@@ -386,4 +393,12 @@ kube-system   kube-scheduler-850181384-ns8pp             1/1       Running   0  
 kube-system   kube-scheduler-850181384-zqm78             1/1       Running   0          6m
 kube-system   pod-checkpointer-node1.example.com         1/1       Running   0          5m
 ```
+If you are experience errors on this process I'd recommend to follow some troubleshooting steps, that were recommended to me on this issue [#437](https://github.com/coreos/matchbox/issues/437)
+
+*And this is Self-Hosted Kubernetes Cluster up and running :D*
+
+Next part I'll go over to the actual cluster and update the kubernetes version, and make api-server HA.
+
+Stay tunned.
+
 
