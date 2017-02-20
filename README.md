@@ -246,8 +246,8 @@ storage:
 ```  
 
 Do the same for 
-- examples/ignition/bootkube-worker.yaml
-- examples/profiles/bootkube-worker.json
+- [examples/ignition/bootkube-worker.yaml](https://github.com/coreos/matchbox/blob/master/examples/ignition/bootkube-worker.yaml)
+- [examples/profiles/bootkube-worker.json](https://github.com/coreos/matchbox/blob/master/examples/profiles/bootkube-worker.json)
 
 
 After "libvirt create" script was executed,  You can connect to the serial console of any node, and spec booting process.
