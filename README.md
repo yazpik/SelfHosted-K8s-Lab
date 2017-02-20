@@ -393,9 +393,12 @@ kube-system   kube-scheduler-850181384-ns8pp             1/1       Running   0  
 kube-system   kube-scheduler-850181384-zqm78             1/1       Running   0          6m
 kube-system   pod-checkpointer-node1.example.com         1/1       Running   0          5m
 ```
+*And this is Self-Hosted Kubernetes Cluster up and running :D*
+
 If you are experience errors on this process I'd recommend to follow some troubleshooting steps, that were recommended to me on this issue [#437](https://github.com/coreos/matchbox/issues/437)
 
-*And this is Self-Hosted Kubernetes Cluster up and running :D*
+Also if you are experiencing a different issue you can always create an issue on the project, CoreOS engineers are pretty responsive and helpful.
+
 
 Next part I'll go over to the actual cluster and update the kubernetes version, and make api-server HA.
 
