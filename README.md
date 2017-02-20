@@ -1,7 +1,7 @@
 # First Steps on Self-Hosted Kubernetes (1 of 2)
 
 
-<img src="http://www.andrewlipson.com/escher/relativity-1600.jpg" width="500" height="500">
+<img src="http://www.andrewlipson.com/escher/relativity-1600.jpg" width="400" height="500">
 
 From [Wikipedia](https://en.wikipedia.org/wiki/History_of_compiler_construction)
 > "Self-hosting is the use of a computer program as part of the toolchain or operating system that produces new versions of that same program—for example, a compiler that can compile its own source code."
