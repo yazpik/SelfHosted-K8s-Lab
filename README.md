@@ -38,19 +38,19 @@ So basically this is the main idea
 #### Required packages
 ```bash
 # Fedora 25
-~# dnf install virt-install virt-manager git gpg rkt
+dnf install virt-install virt-manager git gpg rkt
 
 # Debian/Ubuntu
-~/matchbox# apt-get install virt-manager virtinst libvirt-bin qemu-kvm systemd-container git gpg
+apt-get install virt-manager virtinst libvirt-bin qemu-kvm systemd-container git gpg
 # Install rkt 1.24.0 on Ubuntu 14.04
-~/matchbox# wget https://github.com/coreos/rkt/releases/download/v1.24.0/rkt_1.24.0-1_amd64.deb
-~/matchbox# dpkg -i rkt_1.24.0-1_amd64.deb 
+wget https://github.com/coreos/rkt/releases/download/v1.24.0/rkt_1.24.0-1_amd64.deb
+dpkg -i rkt_1.24.0-1_amd64.deb 
 ```
 From here basically I'm using [official docs](https://github.com/coreos/matchbox) with some changes
 
 Set selinux to permissive if you are using Fedora
 ```
-~/matchbox# setenforce Permissive
+setenforce Permissive
 ```
 **Note**: rkt does not yet integrate with SELinux on Fedora.
 As a workaround, temporarily set enforcement to permissive if you are comfortable.
@@ -71,8 +71,8 @@ Only if you are using RKT
 Define the `metal0` virtual bridge with CNI
 
 ```bash
-$ sudo mkdir -p /etc/rkt/net.d
-$ sudo bash -c 'cat > /etc/rkt/net.d/20-metal.conf << EOF
+mkdir -p /etc/rkt/net.d
+bash -c 'cat > /etc/rkt/net.d/20-metal.conf << EOF
 {
   "name": "metal0",
   "type": "bridge",
@@ -90,12 +90,12 @@ EOF'
 
 On Fedora, add the `metal0` your firewall configuration.
 ```bash
-$ sudo firewall-cmd --add-interface=metal0 --zone=trusted
+firewall-cmd --add-interface=metal0 --zone=trusted
 ```
 Also on Fedora disable network manager
 ```
-$ sudo systemctl stop NetworkManager.service
-$ sudo systemctl disable NetworkManager.service
+systemctl stop NetworkManager.service
+systemctl disable NetworkManager.service
 ```
 
 For development/testing purposes is need to add entries on /etc/hosts, e.g
@@ -130,15 +130,15 @@ So I'll be using bootkube example to bootstrap a Self-hosted kubernetes cluster 
 
 ```
 #### matchbox + bootkube
-$ sudo rkt run --net=metal0:IP=172.18.0.2 --mount volume=data,target=/var/lib/matchbox --volume data,kind=host,source=$PWD/examples --mount volume=groups,target=/var/lib/matchbox/groups --volume groups,kind=host,source=$PWD/examples/groups/bootkube quay.io/coreos/matchbox:latest -- -address=0.0.0.0:8080 -log-level=debug
+rkt run --net=metal0:IP=172.18.0.2 --mount volume=data,target=/var/lib/matchbox --volume data,kind=host,source=$PWD/examples --mount volume=groups,target=/var/lib/matchbox/groups --volume groups,kind=host,source=$PWD/examples/groups/bootkube quay.io/coreos/matchbox:latest -- -address=0.0.0.0:8080 -log-level=debug
 
 #### dnsmasq
-$ sudo rkt run coreos.com/dnsmasq:v0.3.0 --net=metal0:IP=172.18.0.3 --mount volume=config,target=/etc/dnsmasq.conf --volume config,kind=host,source=$PWD/contrib/dnsmasq/metal0.conf
+rkt run coreos.com/dnsmasq:v0.3.0 --net=metal0:IP=172.18.0.3 --mount volume=config,target=/etc/dnsmasq.conf --volume config,kind=host,source=$PWD/contrib/dnsmasq/metal0.conf
 ```
 
 Verify RKT containers are working
 ```
-$ sudo rkt list
+rkt list
 UUID            APP             IMAGE NAME                      STATE   CREATED         STARTED         NETWORKS
 3b700943        matchbox        quay.io/coreos/matchbox:latest  running 6 seconds ago   6 seconds ago   metal0:ip4=172.18.0.2, default-restricted:ip4=172.17.0.2
 fdfa3e2f        dnsmasq         coreos.com/dnsmasq:v0.3.0       running 6 seconds ago   5 seconds ago   metal0:ip4=172.18.0.3, default-restricted:ip4=172.17.0.3
@@ -147,13 +147,13 @@ fdfa3e2f        dnsmasq         coreos.com/dnsmasq:v0.3.0       running 6 second
 
 #### Bootkube example with Docker
 ```
-$ sudo dnf install docker
-$ sudo systemctl start docker
-$ sudo docker pull quay.io/coreos/matchbox:latest
-$ sudo docker run -p 8080:8080 --rm -v $PWD/examples:/var/lib/matchbox:Z -v $PWD/examples/groups/bootkube:/var/lib/matchbox/groups:Z quay.io/coreos/matchbox:latest -address=0.0.0.0:8080 -log-level=debug
+dnf install docker
+systemctl start docker
+docker pull quay.io/coreos/matchbox:latest
+docker run -p 8080:8080 --rm -v $PWD/examples:/var/lib/matchbox:Z -v $PWD/examples/groups/bootkube:/var/lib/matchbox/groups:Z quay.io/coreos/matchbox:latest -address=0.0.0.0:8080 -log-level=debug
 
 #### dnsmasq
-$ sudo docker run --name dnsmasq --cap-add=NET_ADMIN -v $PWD/contrib/dnsmasq/docker0.conf:/etc/dnsmasq.conf:Z quay.io/coreos/dnsmasq -d
+docker run --name dnsmasq --cap-add=NET_ADMIN -v $PWD/contrib/dnsmasq/docker0.conf:/etc/dnsmasq.conf:Z quay.io/coreos/dnsmasq -d
 ```
 In this case, dnsmasq runs a DHCP server allocating IPs to VMs between 172.17.0.43 and 172.17.0.99, resolves matchbox.foo to 172.17.0.2 (the IP where matchbox runs), and points iPXE clients to http://matchbox.foo:8080/boot.ipxe.
 
@@ -206,12 +206,12 @@ Do the same for the rest of the nodes.
 Create 3 virtual instances, according what you configured on libvirt script
 ### RKT
 ```
-$ sudo ./scripts/libvirt create
+./scripts/libvirt create
 ```
 
 ### Docker way
 ```
-$ sudo ./scripts/libvirt create-docker
+./scripts/libvirt create-docker
 ```
 
 #### This is only needed for in case you are using Ubuntu 14.04 and libvirt 1.2
@@ -266,7 +266,7 @@ Do the same for
 
 After "libvirt create" script was executed,  You can connect to the serial console of any node, and spec booting process.
 ```
-$ sudo virsh console node1
+virsh console node1
 ```
 
 At that time matchbox will catch the mac addr configured on [common.sh](https://github.com/coreos/matchbox/blob/master/scripts/common.sh)
@@ -276,7 +276,7 @@ And will proceed with the installation of CoreOS
 
 After 5 minutes or so Installation should be ready and nodes can be acsesible.
 ```
-$ virsh list
+virsh list
 Id    Name                           State
 ----------------------------------------------------
  1     node1                          running
@@ -285,16 +285,16 @@ Id    Name                           State
 ```
 If the SSH key was configured as I described earlier, you should be able to login in the servers with ssh-key, or just use virsh console, profile was configured with autologin
 ```
-$ ssh core@node1
+ssh core@node1
 ```
 Check if etcd was deployed and is healthy
 ```
-$ etcdctl cluster-health
+etcdctl cluster-health
 member 7e40ec9559c0d4da is healthy: got healthy result from http://node1.example.com:2379
 cluster is healthy
 
-$ etcdctl set /message hello
-$ etcdctl get /message
+etcdctl set /message hello
+etcdctl get /message
 hello
 ```
 
@@ -314,14 +314,14 @@ Bootkube definition by CoreOS
 
 Install bootkube v0.3.7
 ```
-$ wget https://github.com/kubernetes-incubator/bootkube/releases/download/v0.3.7/bootkube.tar.gz
-$ tar xzf bootkube.tar.gz
-$ ./bin/linux/bootkube version
+wget https://github.com/kubernetes-incubator/bootkube/releases/download/v0.3.7/bootkube.tar.gz
+tar xzf bootkube.tar.gz
+./bin/linux/bootkube version
 Version: v0.3.7
 ```
 Use the bootkube tool to render Kubernetes manifests and credentials into an --asset-dir. Later, bootkube will schedule these manifests during bootstrapping and the credentials will be used to access your cluster.
 ```
-$ ./bin/linux/bootkube render --asset-dir=assets --api-servers=https://node1.example.com:443 --api-server-alt-names=DNS=node1.example.com
+./bin/linux/bootkube render --asset-dir=assets --api-servers=https://node1.example.com:443 --api-server-alt-names=DNS=node1.example.com
 ```
 
 We're ready to use bootkube to create a temporary control plane and bootstrap a self-hosted Kubernetes cluster.
@@ -338,15 +338,15 @@ If you wonder why scp, please refer to this issue [#234](https://github.com/core
 
 Secure copy the bootkube generated assets to any controller and start bootkube
 ```
-$ scp -r assets core@node1.example.com:/home/core
-$ ssh core@node1.example.com 'sudo mv assets /opt/bootkube/assets && sudo systemctl start bootkube'
+scp -r assets core@node1.example.com:/home/core
+ssh core@node1.example.com 'sudo mv assets /opt/bootkube/assets && sudo systemctl start bootkube'
 ```
 
 You can watch the Kubernetes control plane bootstrapping with the bootkube temporary api-server.
 You will see quite a bit of output.
 
 ```
-$ ssh core@node1.example.com 'journalctl -f -u bootkube'
+ssh core@node1.example.com 'journalctl -f -u bootkube'
 ```
 
 While that is happening download kubectl
@@ -366,14 +366,14 @@ bootkube[5]: All self-hosted control plane components successfully started
 
 Use kubectl using the config rendered by bootkube e.g
 ```
-~/matchbox# ./kubectl --kubeconfig=assets/auth/kubeconfig get nodes
+./kubectl --kubeconfig=assets/auth/kubeconfig get nodes
 NAME                STATUS    AGE
 node1.example.com   Ready     1m
 node2.example.com   Ready     1m
 node3.example.com   Ready     1m
 
 
-~/matchbox# ./kubectl --kubeconfig=assets/auth/kubeconfig get pods --all-namespaces
+./kubectl --kubeconfig=assets/auth/kubeconfig get pods --all-namespaces
 NAMESPACE     NAME                                       READY     STATUS    RESTARTS   AGE
 kube-system   checkpoint-installer-bwtg9                 1/1       Running   0          6m
 kube-system   kube-apiserver-1bdw0                       1/1       Running   2          6m
