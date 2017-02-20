@@ -38,7 +38,7 @@ So basically this is the main idea
 #### Required packages
 ```bash
 # Fedora 25
-~/matchbox# dnf install virt-install virt-manager git gpg rkt
+~# dnf install virt-install virt-manager git gpg rkt
 
 # Debian/Ubuntu
 ~/matchbox# apt-get install virt-manager virtinst libvirt-bin qemu-kvm systemd-container git gpg
