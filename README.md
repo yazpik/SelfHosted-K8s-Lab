@@ -250,10 +250,16 @@ Do the same for
 - examples/profiles/bootkube-worker.json
 
 
-
-After libvirt create was launched  You can connect to the serial console of any node. If you provisioned nodes with an SSH key, you can SSH after bring-up.
-
+After "libvirt create" script was executed,  You can connect to the serial console of any node, and spec booting process.
+```
 sudo virsh console node1
+```
 
+At that time matchbox will catch the mac addr configured on [common.sh](https://github.com/coreos/matchbox/blob/master/scripts/common.sh)
+And will proceed with the installation of CoreOS
+![matchbox](https://cloud.githubusercontent.com/assets/7389339/23140410/0af48c7c-f777-11e6-9a8f-5b1b449a5d7b.jpg)
+
+
+![dnsmasq](https://cloud.githubusercontent.com/assets/7389339/23140409/0af3b4be-f777-11e6-88fe-db1e49ce2fea.jpg)
 
 
