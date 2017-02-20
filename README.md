@@ -260,5 +260,5 @@ And will proceed with the installation of CoreOS
 
 <img center src="https://cloud.githubusercontent.com/assets/7389339/23140410/0af48c7c-f777-11e6-9a8f-5b1b449a5d7b.jpg" width="850" height="500">
 
-
+<img center src="https://cloud.githubusercontent.com/assets/7389339/23140825/5d8a6a04-f779-11e6-974e-b9c628d3876c.jpg">
 
