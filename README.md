@@ -344,3 +344,26 @@ Secure copy the bootkube generated assets to any controller and start bootkube
 scp -r assets core@node1.example.com:/home/core
 ssh core@node1.example.com 'sudo mv assets /opt/bootkube/assets && sudo systemctl start bootkube'
 ```
+
+You can watch the Kubernetes control plane bootstrapping with the bootkube temporary api-server.
+You will see quite a bit of output.
+
+```
+$ ssh core@node1.example.com 'journalctl -f -u bootkube'
+```
+
+While that is happening download kubectl
+```
+# OS X
+curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/darwin/amd64/kubectl
+
+# Linux
+curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+```
+
+```
+Feb 19 18:11:29 node1.example.com bootkube-start[1710]: [  309.970792] bootkube[5]:         Pod Status: kube-controller-manager        Running
+Feb 19 18:11:29 node1.example.com bootkube-start[1710]: [  309.971031] bootkube[5]: All self-hosted control plane components successfully started
+```
+
+
