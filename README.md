@@ -302,5 +302,12 @@ hello
 
 ```
 
+### A bit of troubleshooting at this point.
+- Make sure matchbox and dnsmasq containers are running
+- Make sure firewalld and selinux is disabled, and metal0 was allowed (if Fedora)
+- Check journactl logs, matchbox console if servers are not booting
+- Check libvirt version, (if ubuntu)
+
+
 
 
