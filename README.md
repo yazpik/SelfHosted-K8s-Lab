@@ -30,7 +30,7 @@ So basically this is the main idea
 [iPXE](https://coreos.com/os/docs/latest/booting-with-ipxe.html) and [Ignition](https://github.com/coreos/ignition) to the QEMU/KVM virtual instances
 - One [dnsmasq](https://github.com/coreos/matchbox/tree/master/contrib/dnsmasq) container to provide DNS, DHCP services using this [config](https://github.com/coreos/matchbox/blob/master/contrib/dnsmasq/metal0.conf)
 
-![imagen](diagram1.jpg)
+![imagen](https://cloud.githubusercontent.com/assets/7389339/23139792/d98ad950-f773-11e6-9db5-621eb2a916f5.jpg)
 
 #### Required packages
 ```bash
