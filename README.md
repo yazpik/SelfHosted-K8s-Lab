@@ -40,8 +40,8 @@ So basically this is the main idea
 # Fedora 25
 dnf install virt-install virt-manager git gpg rkt
 
-# Debian/Ubuntu
-apt-get install virt-manager virtinst libvirt-bin qemu-kvm systemd-container git gpg
+# Ubuntu 14.04
+apt-get install virt-manager virtinst libvirt-bin qemu-kvm git gpg
 # Install rkt 1.24.0 on Ubuntu 14.04
 wget https://github.com/coreos/rkt/releases/download/v1.24.0/rkt_1.24.0-1_amd64.deb
 dpkg -i rkt_1.24.0-1_amd64.deb 
