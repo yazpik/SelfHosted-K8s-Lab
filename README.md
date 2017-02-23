@@ -238,7 +238,7 @@ storage:
   {{end}}
 ```
 
-**examples/profiles/bootkube-worker.json**
+**examples/profiles/bootkube-controller.json**
 
 ```json
 {
