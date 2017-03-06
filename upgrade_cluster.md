@@ -4,8 +4,7 @@
 Using bootkube 0.3.7 deploys a v1.5.2 kubernetes cluster, let's upgrade to
 v1.5.3, without taking down any application.
 
-I based this guide on official CoreOS documentation here
-https://github.com/coreos/matchbox/blob/master/Documentation/bootkube-upgrades.md
+I based this guide on official CoreOS documentation [here](https://github.com/coreos/matchbox/blob/master/Documentation/bootkube-upgrades.md)
 
 After you see this message with bootkube finishing
 ```
@@ -50,8 +49,7 @@ kube-apiserver         1         1         1         master=true     37m
 kube-flannel           3         3         3         <none>          37m
 kube-proxy             3         3         3         <none>          37m
 ```
-
-Get deployments
+And deployments
 ```
 root@selfhosted-k8s-lab:~/matchbox# kubectl get deployments -n kube-system
 NAME                      DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
@@ -79,7 +77,7 @@ to fetch the required image version to all nodes before to attempt the upgrade
 
 We are running here v1.5.2 and we are targeting 1.5.3, 
 
-##### You can use your prefered method here, Ansible, SSH loop, or manual update
+#### You can use your prefered method here, Ansible, SSH loop, or manual update
 Basically what is required :
 ```
 #Docker image for control plane components
@@ -94,8 +92,7 @@ sudo rkt fetch quay.io/coreos/hyperkube:v1.5.3_coreos.0
 After this all the nodes should have the new image required to the upgrade (v1.5.3) for this case.
 
 ### So let's upgrade the cluster while we are running some workload to the service external IP
-For this I'm going to use [boom](https://pypi.python.org/pypi/boom/1.0)  
-e.g 
+For this I'm going to use [boom](https://pypi.python.org/pypi/boom/1.0) 
 
 Running 300 seconds with concurrency 111 users to the external service IP
 ```
@@ -110,6 +107,7 @@ https://github.com/kubernetes/features/issues?q=is%3Aopen+is%3Aissue+milestone%3
 And also this proposal
 https://github.com/kubernetes/community/blob/master/contributors/design-proposals/daemonset-update.md
 
-
+```
 $ kubectl edit daemonset kube-apiserver -n=kube-system
+```
 Since daemonsets don't yet support rolling, manually delete each apiserver one by one and wait for each to be re-scheduled.
