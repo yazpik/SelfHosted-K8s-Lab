@@ -102,10 +102,10 @@ root@selfhosted-k8s-lab:~/matchbox# boom http://172.18.0.21 -d 300 -c 111
 #### IMPORTANT NOTE 
 Daemonsets do not support rolling updates yet
 It seems is going to be a feature of kubernetes 1.6
-https://github.com/kubernetes/features/issues?q=is%3Aopen+is%3Aissue+milestone%3Av1.6
+- https://github.com/kubernetes/features/issues?q=is%3Aopen+is%3Aissue+milestone%3Av1.6
 
-And also this proposal
-https://github.com/kubernetes/community/blob/master/contributors/design-proposals/daemonset-update.md
+Also see this proposal
+- https://github.com/kubernetes/community/blob/master/contributors/design-proposals/daemonset-update.md
 
 ```
 $ kubectl edit daemonset kube-apiserver -n=kube-system
