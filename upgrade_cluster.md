@@ -107,6 +107,7 @@ It seems is going to be a feature of kubernetes 1.6
 Also see this proposal
 - https://github.com/kubernetes/community/blob/master/contributors/design-proposals/daemonset-update.md
 
+Lets edit the daemonset kube-apiserver manifest
 ```
 $ kubectl edit daemonset kube-apiserver -n=kube-system
 ```
@@ -117,7 +118,7 @@ Since daemonsets don't yet support rolling updates, we have to manually delete e
 root@selfhosted-k8s-lab:~/matchbox# kubectl delete pod kube-apiserver-p4w88 -n kube-system
 pod "kube-apiserver-p4w88" deleted
 ```
-As we have already the new image on the new, it was just a matter of a couple of seconds to create a new one
+As we have already the new image on the new, it was just a matter of seconds to create a new one
 ```
 root@selfhosted-k8s-lab:~/matchbox# kubectl get pods -n kube-system
 kube-apiserver-pjvl9                       0/1       ContainerCreating   0          0s
@@ -128,7 +129,7 @@ We have to do the same for the rest of the kube-apiserver pods running (for this
 ```
 root@selfhosted-k8s-lab:~/matchbox# kubectl delete pod kube-apiserver-1k9pc -n kube-system
 ```
-Both apiservers are running
+Both apiservers are running with the new version
 ```
 root@selfhosted-k8s-lab:~/matchbox# kubectl get pods -n kube-system -o wide | grep api
 kube-apiserver-ntggg                       1/1       Running   0          3m        172.18.0.21   node1.example.com
@@ -184,7 +185,7 @@ And same process deleting running pods for this daemonset (kubeproxy)
 
 ### Update kubelet on nodes
 On each node change this environment file
-e.g
+e.g for node3
 ```
 core@node3 ~ $ sudo vim /etc/kubernetes/kubelet.env
 #
@@ -247,9 +248,5 @@ Code 200          		91591 times.
 RPS: Request Per Second
 BSI: Boom Speed Index
 ```
-
-
-
-
 
 
