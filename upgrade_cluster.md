@@ -1,4 +1,4 @@
-# Upgrade the Cluster 
+# Upgrading the Kubernetes Cluster 
 ### This is the part 2 of the Self-Hosted kubernetes Cluster lab
 
 Using bootkube 0.3.7 deploys a v1.5.2 kubernetes cluster, let's upgrade to
