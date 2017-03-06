@@ -110,6 +110,24 @@ https://github.com/kubernetes/community/blob/master/contributors/design-proposal
 ```
 $ kubectl edit daemonset kube-apiserver -n=kube-system
 ```
-![x](https://cloud.githubusercontent.com/assets/7389339/23628820/3d4bd720-027b-11e7-8685-9af01b2b8f45.jpg)
+![edit-api-server-daemonset](https://cloud.githubusercontent.com/assets/7389339/23628820/3d4bd720-027b-11e7-8685-9af01b2b8f45.jpg)
 
-Since daemonsets don't yet support rolling, manually delete each apiserver one by one and wait for each to be re-scheduled.
+Since daemonsets don't yet support rolling updates, we have to manually delete each apiserver pod for each to be re-scheduled.
+```
+root@selfhosted-k8s-lab:~/matchbox# kubectl delete pod kube-apiserver-p4w88 -n kube-system
+pod "kube-apiserver-p4w88" deleted
+```
+As we have already the new image on the new, it was just a matter of a couple of seconds to create a new one
+```
+root@selfhosted-k8s-lab:~/matchbox# kubectl get pods -n kube-system
+kube-apiserver-pjvl9                       0/1       ContainerCreating   0          0s
+root@selfhosted-k8s-lab:~/matchbox# kubectl get pods -n kube-system
+kube-apiserver-pjvl9                       1/1       Running   0          16s
+```
+We have to do the same for the rest of the kube-apiserver pods running (for this example are just two)
+```
+root@selfhosted-k8s-lab:~/matchbox# kubectl delete pod kube-apiserver-1k9pc -n kube-system
+
+root@selfhosted-k8s-lab:~/matchbox# kubectl get pods -n kube-system
+kube-apiserver-ntggg                       1/1       Running   0          13s
+```
