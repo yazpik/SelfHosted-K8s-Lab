@@ -1,5 +1,3 @@
-### This is the part 2 of the SelfHosted kubernetes Cluster lab
-
 ## Upgrade the Cluster 
 ### This is the part 2 of the Self-Hosted kubernetes Cluster lab
 
