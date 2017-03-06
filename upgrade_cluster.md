@@ -69,8 +69,9 @@ node "node2.example.com" labeled
 ```
 After this step, another api-server container will be deployed on the new node labeled as master
 ```
-root@selfhosted-k8s-lab:~/matchbox# kubectl get pods -n kube-system -o wide 
-kube-apiserver-p4w88                       1/1       Running   0          10m       172.18.0.22   node2.example.com
+root@selfhosted-k8s-lab:~/matchbox# kubectl get pods -n kube-system -o wide | grep apiserver
+kube-apiserver-1k9pc                       1/1       Running   2          1h        172.18.0.21   node1.example.com
+kube-apiserver-p4w88                       1/1       Running   0          13m       172.18.0.22   node2.example.com
 ```
 
 
@@ -80,16 +81,20 @@ to fetch the required image version to all nodes before to attempt the upgrade
 
 We are running here v1.5.2 and we are targeting 1.5.3, 
 
-##### On node1, existing images
+##### You can use your prefered method, Ansible, SSH loop, or manual update
+Basically what is required is 
 
-#Docker image
+#Docker image for control plane components
 sudo docker pull quay.io/coreos/hyperkube:v1.5.3_coreos.0
 
+#rkt image for kubelet and kubeproxy
 #Trust the rkt hyperkube repo
 sudo rkt trust --skip-fingerprint-review --prefix quay.io/coreos/hyperkube
 sudo rkt fetch quay.io/coreos/hyperkube:v1.5.3_coreos.0
-
 ```
+After this all the nodes should have the new image required to the upgrade (v1.5.3) for this case.
+
+
 Before to upgrade the cluster, let's generate some traffic to the LoadBalancer IP
 
 I'm going to use [boom](https://pypi.python.org/pypi/boom/1.0) for this 
