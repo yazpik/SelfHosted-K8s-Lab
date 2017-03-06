@@ -33,7 +33,7 @@ Now expose the "spacemonkey" deployment to a service basically as a simple LB
 root@selfhosted-k8s-lab:~/matchbox# kubectl expose deployment spacemonkey --port 80 --external-ip 172.18.0.21 --name spacemonkey-svc
 service "spacemonkey-svc" exposed
 ```
-Service exposed and working as a loadbalancer
+Service (spacemonkey-svc) exposed and working as a loadbalancer with 50 replicas
 ```
 selfhosted-k8s-lab:~/matchbox# kubectl get ep
 NAME              ENDPOINTS                                             AGE
@@ -41,7 +41,7 @@ kubernetes        172.18.0.21:443                                       8m
 spacemonkey-svc   10.2.0.10:80,10.2.0.11:80,10.2.0.12:80 + 47 more...   3m
 ```
 
-##### So let's upgrade the cluster while we are running some workload to the service external IP
+#### So let's upgrade the cluster while we are running some workload to the service external IP
 
 Show the control plane daemonsets and deployments which will need to be updated.
 ```
@@ -67,6 +67,13 @@ Label a new node as master, so we will have an HA kubernetes cluster
 root@selfhosted-k8s-lab:~/matchbox# kubectl label node node2.example.com master=true
 node "node2.example.com" labeled
 ```
+After this step, another api-server container will be deployed on the new node labeled as master
+```
+root@selfhosted-k8s-lab:~/matchbox# kubectl get pods -n kube-system -o wide 
+kube-apiserver-p4w88                       1/1       Running   0          10m       172.18.0.22   node2.example.com
+```
+
+
 #### kube-apiserver
 As a best practice and avoid any error during images download, I think is a good idea
 to fetch the required image version to all nodes before to attempt the upgrade
