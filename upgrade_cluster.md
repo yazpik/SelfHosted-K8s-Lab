@@ -22,7 +22,7 @@ Server Version: version.Info{Major:"1", Minor:"5", GitVersion:"v1.5.2+coreos.1",
 
 Let's create a deployment first to test the upgrade running an actual "aplication"
 
-For this I'm going to use one of my containers, running Nginx 1.11.5 on Alpine and create a 50 pods deployment
+For this I'm going to use one of my public containers, running Nginx 1.11.5 on Alpine and create a 50 pods deployment
 ```
 root@selfhosted-k8s-lab:~/matchbox# kubectl run --image quay.io/yazpik/spacemonkey:v4.0 --replicas 50 spacemonkey
 deployment "spacemonkey" created
@@ -230,6 +230,11 @@ Do not forget of the http load we sent earlier for 5 minutes, with 111 concurren
 
 Not bad :D
 ```
+root@selfhosted-k8s-lab:~# boom http://172.18.0.21 -d 300 -c 111
+Server Software: nginx/1.11.5
+Running GET http://172.18.0.21:80
+Running for 300 seconds - concurrency 111.
+Starting the load....................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
 -------- Results --------
 Successful calls		91591
 Total time        		300.0118 s
