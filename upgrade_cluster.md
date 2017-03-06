@@ -144,7 +144,7 @@ $ kubectl edit deployments kube-scheduler -n=kube-system
 ```
 Wait for the schduler to be deployed.
 
-#### kube-controller-manager
+### kube-controller-manager
 
 Edit the controller-manager deployment to rolling update the controller manager. 
 ```
@@ -162,5 +162,42 @@ Server Version: version.Info{Major:"1", Minor:"5", GitVersion:"v1.5.3+coreos.0",
 ```
 ### Kubelet and Kubeproxy
 #### Another important note here
-Official CoreOS documentation, consider the kubelet as a daemonset, but is no longer deployed on that way.
+Official CoreOS documentation, consider the kubelet as a daemonset, but is no longer deployed that way.
 Is needed to edit to edit the kubelet systemd unit to use the next version in the envrionment file, it's a manual process and need to be done on all the nodes that runs the kubelet, see issue [#448](https://github.com/coreos/matchbox/issues/448) 
+
+Check kubelet and kubeproxy running on hosts
+```
+root@selfhosted-k8s-lab:~/matchbox# kubectl get nodes -o yaml | grep 'kubeletVersion\|kubeProxyVersion'
+      kubeProxyVersion: v1.5.2+coreos.0
+      kubeletVersion: v1.5.2+coreos.0
+      kubeProxyVersion: v1.5.2+coreos.0
+      kubeletVersion: v1.5.2+coreos.0
+      kubeProxyVersion: v1.5.2+coreos.0
+      kubeletVersion: v1.5.2+coreos.0
+```
+
+First edit the kubeproxy daemonset
+```
+kubectl edit daemonset kube-proxy -n=kube-system
+```
+And same process deleting running pods for this daemonset (kubeproxy)
+
+### Update kubelet on nodes
+On each node change this environment file
+e.g
+```
+core@node3 ~ $ sudo vim /etc/kubernetes/kubelet.env
+#
+KUBELET_ACI=quay.io/coreos/hyperkube
+KUBELET_VERSION=v1.5.3_coreos.0
+# change the kubelet version to the new one
+```
+Restart the kubelet (since we already fetched the images, kubelet creation with the new image should be fairly quick)
+
+```
+core@node3 ~ $ sudo systemctl restart kubelet
+```
+
+
+
+
