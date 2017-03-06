@@ -192,11 +192,41 @@ KUBELET_ACI=quay.io/coreos/hyperkube
 KUBELET_VERSION=v1.5.3_coreos.0
 # change the kubelet version to the new one
 ```
-Restart the kubelet (since we already fetched the images, kubelet creation with the new image should be fairly quick)
-
+Restart the kubelet (since we already fetched the image required, kubelet creation with the new image should be fairly quick)
 ```
 core@node3 ~ $ sudo systemctl restart kubelet
 ```
+
+Images available on node
+```
+core@node3 ~ $ rkt image list
+ID                      NAME                                            SIZE    IMPORT TIME     LAST USED
+sha512-4b541439adba     quay.io/coreos/hyperkube:v1.5.2_coreos.0        1.2GiB  2 hours ago     2 hours ago
+sha512-c4c0341425c8     coreos.com/rkt/stage1-fly:1.18.0                17MiB   56 seconds ago  56 seconds ago
+sha512-d17ee4d00002     quay.io/coreos/hyperkube:v1.5.3_coreos.0        1.2GiB  34 seconds ago  1 hour ago
+```
+After the kubelet restart, kubelet container was launched with the new image
+```
+core@node3 ~ $ rkt list
+UUID            APP             IMAGE NAME                                      STATE   CREATED         STARTED         NETWORKS
+8f05fe9b        hyperkube       quay.io/coreos/hyperkube:v1.5.3_coreos.0        running 1 minute ago    1 minute ago
+```
+
+Repeat the same on the rest of the nodes.
+
+When it's done, verify with
+```
+root@selfhosted-k8s-lab:~/matchbox#  kubectl get nodes -o yaml | grep 'kubeletVersion\|kubeProxyVersion'
+      kubeProxyVersion: v1.5.3+coreos.0
+      kubeletVersion: v1.5.3+coreos.0
+      kubeProxyVersion: v1.5.3+coreos.0
+      kubeletVersion: v1.5.3+coreos.0
+      kubeProxyVersion: v1.5.3+coreos.0
+      kubeletVersion: v1.5.3+coreos.0
+```
+
+
+
 
 
 
