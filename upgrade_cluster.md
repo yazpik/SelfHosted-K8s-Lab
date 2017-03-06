@@ -225,6 +225,28 @@ root@selfhosted-k8s-lab:~/matchbox#  kubectl get nodes -o yaml | grep 'kubeletVe
       kubeletVersion: v1.5.3+coreos.0
 ```
 
+Do not forget of the http load we sent earlier for 5 minutes, with 111 concurrent users on 50 pods.
+
+Not bad :D
+```
+-------- Results --------
+Successful calls		91591
+Total time        		300.0118 s
+Average           		0.2366 s
+Fastest           		0.1170 s
+Slowest           		1.2103 s
+Amplitude         		1.0933 s
+Standard deviation		0.144113
+RPS               		305
+BSI              		Pretty good
+
+-------- Status codes --------
+Code 200          		91591 times.
+
+-------- Legend --------
+RPS: Request Per Second
+BSI: Boom Speed Index
+```
 
 
 
