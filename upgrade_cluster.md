@@ -164,7 +164,7 @@ Server Version: version.Info{Major:"1", Minor:"5", GitVersion:"v1.5.3+coreos.0",
 ### Kubelet and Kubeproxy
 #### Another important note here
 Official CoreOS documentation, consider the kubelet as a daemonset, but is no longer deployed that way.
-Is needed to edit to edit the kubelet systemd unit to use the next version in the envrionment file, it's a manual process and need to be done on all the nodes that runs the kubelet, see issue [#448](https://github.com/coreos/matchbox/issues/448) 
+Is needed to edit the kubelet systemd unit to use the next version in the envrionment file, it's a manual process and need to be done on all the nodes that runs the kubelet, see issue [#448](https://github.com/coreos/matchbox/issues/448) 
 
 Check kubelet and kubeproxy running on hosts
 ```
