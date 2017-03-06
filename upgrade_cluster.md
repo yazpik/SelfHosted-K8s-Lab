@@ -1,4 +1,4 @@
-## Upgrade the Cluster 
+# Upgrade the Cluster 
 ### This is the part 2 of the Self-Hosted kubernetes Cluster lab
 
 Using bootkube 0.3.7 deploys a v1.5.2 kubernetes cluster, let's upgrade to
@@ -41,8 +41,6 @@ kubernetes        172.18.0.21:443                                       8m
 spacemonkey-svc   10.2.0.10:80,10.2.0.11:80,10.2.0.12:80 + 47 more...   3m
 ```
 
-#### So let's upgrade the cluster while we are running some workload to the service external IP
-
 Show the control plane daemonsets and deployments which will need to be updated.
 ```
 root@selfhosted-k8s-lab:~/matchbox# kubectl get daemonsets -n kube-system
@@ -75,38 +73,36 @@ kube-apiserver-p4w88                       1/1       Running   0          13m   
 ```
 
 
-#### kube-apiserver
+### kube-apiserver
 As a best practice and avoid any error during images download, I think is a good idea
 to fetch the required image version to all nodes before to attempt the upgrade
 
 We are running here v1.5.2 and we are targeting 1.5.3, 
 
-##### You can use your prefered method, Ansible, SSH loop, or manual update
-Basically what is required is 
-
+##### You can use your prefered method here, Ansible, SSH loop, or manual update
+Basically what is required :
+```
 #Docker image for control plane components
-sudo docker pull quay.io/coreos/hyperkube:v1.5.3_coreos.0
+sudo docker pull quay.io/coreos/hyperkube:v1.5.3_coreos.0  <--new image tag
 
 #rkt image for kubelet and kubeproxy
 #Trust the rkt hyperkube repo
 sudo rkt trust --skip-fingerprint-review --prefix quay.io/coreos/hyperkube
+
 sudo rkt fetch quay.io/coreos/hyperkube:v1.5.3_coreos.0
 ```
 After this all the nodes should have the new image required to the upgrade (v1.5.3) for this case.
 
-
-Before to upgrade the cluster, let's generate some traffic to the LoadBalancer IP
-
-I'm going to use [boom](https://pypi.python.org/pypi/boom/1.0) for this 
-for e.g 
+### So let's upgrade the cluster while we are running some workload to the service external IP
+For this I'm going to use [boom](https://pypi.python.org/pypi/boom/1.0)  
+e.g 
 
 Running 300 seconds with concurrency 111 users to the external service IP
 ```
 root@selfhosted-k8s-lab:~/matchbox# boom http://172.18.0.21 -d 120 -c 111
 
 ```
-
-
+#### IMPORTANT NOTE 
 Daemonsets do not support rolling updates yet
 It seems is going to be a feature of kubernetes 1.6
 https://github.com/kubernetes/features/issues?q=is%3Aopen+is%3Aissue+milestone%3Av1.6
