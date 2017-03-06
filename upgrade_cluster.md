@@ -96,7 +96,7 @@ For this I'm going to use [boom](https://pypi.python.org/pypi/boom/1.0)
 
 Running 300 seconds with concurrency 111 users to the external service IP
 ```
-root@selfhosted-k8s-lab:~/matchbox# boom http://172.18.0.21 -d 120 -c 111
+root@selfhosted-k8s-lab:~/matchbox# boom http://172.18.0.21 -d 300 -c 111
 
 ```
 #### IMPORTANT NOTE 
@@ -127,7 +127,40 @@ kube-apiserver-pjvl9                       1/1       Running   0          16s
 We have to do the same for the rest of the kube-apiserver pods running (for this example are just two)
 ```
 root@selfhosted-k8s-lab:~/matchbox# kubectl delete pod kube-apiserver-1k9pc -n kube-system
-
-root@selfhosted-k8s-lab:~/matchbox# kubectl get pods -n kube-system
-kube-apiserver-ntggg                       1/1       Running   0          13s
 ```
+Both apiservers are running
+```
+root@selfhosted-k8s-lab:~/matchbox# kubectl get pods -n kube-system -o wide | grep api
+kube-apiserver-ntggg                       1/1       Running   0          3m        172.18.0.21   node1.example.com
+kube-apiserver-pjvl9                       1/1       Running   0          7m        172.18.0.22   node2.example.com
+```
+### Time to work on the kube-scheduler and kube-controller-manager
+
+### kube-scheduler
+
+Edit the scheduler deployment to rolling update the scheduler. Change the container image name for the new hyperkube version
+```
+$ kubectl edit deployments kube-scheduler -n=kube-system
+```
+Wait for the schduler to be deployed.
+
+#### kube-controller-manager
+
+Edit the controller-manager deployment to rolling update the controller manager. 
+```
+$ kubectl edit deployments kube-controller-manager -n=kube-system
+```
+Wait for the controller manager to be deployed.
+
+### Verify
+
+At this point control plane was upgraded from v1.5.2 to v1.5.3
+```
+root@selfhosted-k8s-lab:~/matchbox# kubectl version
+Client Version: version.Info{Major:"1", Minor:"5", GitVersion:"v1.5.3", GitCommit:"029c3a408176b55c30846f0faedf56aae5992e9b", GitTreeState:"clean", BuildDate:"2017-02-15T06:40:50Z", GoVersion:"go1.7.4", Compiler:"gc", Platform:"linux/amd64"}
+Server Version: version.Info{Major:"1", Minor:"5", GitVersion:"v1.5.3+coreos.0", GitCommit:"8fc95b64d0fe1608d0f6c788eaad2c004f31e7b7", GitTreeState:"clean", BuildDate:"2017-02-15T19:52:15Z", GoVersion:"go1.7.4", Compiler:"gc", Platform:"linux/amd64"}
+```
+### Kubelet and Kubeproxy
+#### Another important note here
+Official CoreOS documentation, consider the kubelet as a daemonset, but is no longer deployed on that way.
+Is needed to edit to edit the kubelet systemd unit to use the next version in the envrionment file, it's a manual process and need to be done on all the nodes that runs the kubelet, see issue [#448](https://github.com/coreos/matchbox/issues/448) 
