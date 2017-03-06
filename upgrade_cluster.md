@@ -110,4 +110,6 @@ https://github.com/kubernetes/community/blob/master/contributors/design-proposal
 ```
 $ kubectl edit daemonset kube-apiserver -n=kube-system
 ```
+https://cloud.githubusercontent.com/assets/7389339/23628820/3d4bd720-027b-11e7-8685-9af01b2b8f45.jpg
+
 Since daemonsets don't yet support rolling, manually delete each apiserver one by one and wait for each to be re-scheduled.
