@@ -12,7 +12,7 @@ After you see this message with bootkube finishing
 bootkube[5]: All self-hosted control plane components successfully started  
 ```
 
-You should be able to get all the k8s components running as described on part 1 of this document
+You should be able to get all the k8s components running as described on [part 1](https://github.com/yazpik/SelfHosted-K8s-Lab) of this document
 
 Check current version deployed (server version)
 ```
@@ -22,12 +22,13 @@ Server Version: version.Info{Major:"1", Minor:"5", GitVersion:"v1.5.2+coreos.1",
 ```
 
 Let's create a deployment first to test the upgrade running an actual "aplication"
-For this I'm going to use one of my containers, running nginx 1.11.5 on Alpine.
+
+For this I'm going to use one of my containers, running Nginx 1.11.5 on Alpine and create a 50 pods deployment
 ```
 root@selfhosted-k8s-lab:~/matchbox# kubectl run --image quay.io/yazpik/spacemonkey:v4.0 --replicas 50 spacemonkey
 deployment "spacemonkey" created
 ```
-Now expose the deployment to a service basically as a simple LB
+Now expose the "spacemonkey" deployment to a service basically as a simple LB
 ```
 root@selfhosted-k8s-lab:~/matchbox# kubectl expose deployment spacemonkey --port 80 --external-ip 172.18.0.21 --name spacemonkey-svc
 service "spacemonkey-svc" exposed
@@ -38,15 +39,6 @@ selfhosted-k8s-lab:~/matchbox# kubectl get ep
 NAME              ENDPOINTS                                             AGE
 kubernetes        172.18.0.21:443                                       8m
 spacemonkey-svc   10.2.0.10:80,10.2.0.11:80,10.2.0.12:80 + 47 more...   3m
-```
-
-And we need to generate actual traffic to the app, I'm going to use [boom](https://pypi.python.org/pypi/boom/1.0) for this 
-for e.g 
-
-Running 120 seconds with concurrency 111 users to the external service IP
-```
-root@selfhosted-k8s-lab:~/matchbox# boom http://172.18.0.21 -d 120 -c 111
-
 ```
 
 ##### So let's upgrade the cluster while we are running some workload to the service external IP
@@ -91,6 +83,16 @@ sudo rkt trust --skip-fingerprint-review --prefix quay.io/coreos/hyperkube
 sudo rkt fetch quay.io/coreos/hyperkube:v1.5.3_coreos.0
 
 ```
+Before to upgrade the cluster, let's generate some traffic to the LoadBalancer IP
+
+I'm going to use [boom](https://pypi.python.org/pypi/boom/1.0) for this 
+for e.g 
+
+Running 300 seconds with concurrency 111 users to the external service IP
+```
+root@selfhosted-k8s-lab:~/matchbox# boom http://172.18.0.21 -d 120 -c 111
+
+```
 
 
 Daemonsets do not support rolling updates yet
@@ -103,4 +105,3 @@ https://github.com/kubernetes/community/blob/master/contributors/design-proposal
 
 $ kubectl edit daemonset kube-apiserver -n=kube-system
 Since daemonsets don't yet support rolling, manually delete each apiserver one by one and wait for each to be re-scheduled.
-
