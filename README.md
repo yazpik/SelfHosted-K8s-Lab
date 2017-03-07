@@ -401,8 +401,10 @@ Next part I'll go over to the actual cluster and update the kubernetes version, 
 
 Stay tunned.
 
-UPDATE:
+-------------------------------
+### UPDATE:
 Here is Part2 "Upgrading the Kubernetes Cluster"
+
 
 https://github.com/yazpik/SelfHosted-K8s-Lab/blob/master/upgrade_cluster.md
 
