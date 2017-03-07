@@ -107,7 +107,7 @@ It seems is going to be a feature of kubernetes 1.6
 Also see this proposal
 - https://github.com/kubernetes/community/blob/master/contributors/design-proposals/daemonset-update.md
 
-Lets edit the daemonset kube-apiserver manifest
+#### Lets edit the daemonset kube-apiserver manifest
 ```
 $ kubectl edit daemonset kube-apiserver -n=kube-system
 ```
